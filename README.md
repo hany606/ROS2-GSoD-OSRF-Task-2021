@@ -14,3 +14,5 @@ This repository is for GSoD assignment 2021
 [ ] Write about concepts of custom messages, publishers and subscribers
 
 [ ] Write small documentation about creating packages
+
+[ ] Add references: https://docs.ros.org/en/foxy/Tutorials/Creating-Your-First-ROS2-Package.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
