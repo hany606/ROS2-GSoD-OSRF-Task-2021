@@ -20,6 +20,13 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
+find_package(rosidl_default_generators REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Request.msg"
+)
+
+
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -27,9 +34,14 @@ find_package(std_msgs REQUIRED)
 add_executable(customer src/customer.cpp)
 ament_target_dependencies(customer rclcpp std_msgs)
 
+add_executable(customer_msg src/customer_msg.cpp)
+ament_target_dependencies(customer_msg rclcpp std_msgs)
+
 add_executable(multiplier src/multiplier.cpp)
 ament_target_dependencies(multiplier rclcpp std_msgs)
 
+add_executable(multiplier_msg src/multiplier_msg.cpp)
+ament_target_dependencies(multiplier_msg rclcpp std_msgs)
 
 
 add_executable(print_test src/print_test.cpp)

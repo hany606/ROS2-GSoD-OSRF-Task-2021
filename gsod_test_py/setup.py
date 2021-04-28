@@ -22,7 +22,11 @@ setup(
         'console_scripts': [
             'print_test = gsod_test_py.print_test:main',
             'customer = gsod_test_py.customer:main',
-            'multiplier = gsod_test_py.multiplier:main'
+            'customer_msg = gsod_test_py.customer_msg:main',
+            'customerv2 = gsod_test_py.customerv2:main',
+            'customerv2_msg = gsod_test_py.customerv2_msg:main',
+            'multiplier = gsod_test_py.multiplier:main',
+            'multiplier_msg = gsod_test_py.multiplier_msg:main'
 
         ],
     },
