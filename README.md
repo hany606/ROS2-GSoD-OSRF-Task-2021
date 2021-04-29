@@ -196,12 +196,12 @@ I strongly recommend to read these tutorials for more information about ROS2:
 
 ## TODO:
 
-[x] Add about docker: https://github.com/PXLAIRobotics/ROS2FoxyDocker/blob/master/02_run_container.sh
+- [x] Add about docker: https://github.com/PXLAIRobotics/ROS2FoxyDocker/blob/master/02_run_container.sh
 
-[x] Add about steps and modification to run the dockerfile
+- [x] Add about steps and modification to run the dockerfile
 
-[x] Write about creating the packages
+- [x] Write about creating the packages
 
-[x] Write steps to run all the stuff
+- [x] Write steps to run all the stuff
 
-[x] Add references: https://docs.ros.org/en/foxy/Tutorials/Creating-Your-First-ROS2-Package.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
+- [x] Add references: https://docs.ros.org/en/foxy/Tutorials/Creating-Your-First-ROS2-Package.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
