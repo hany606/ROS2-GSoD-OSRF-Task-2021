@@ -3,6 +3,29 @@ This repository contains solutions for Google Summer of Docs (GSoD) assignment 2
 
 In this task, I have chosen ROS2 Foxy Fitzroy.
 
+## Architechture
+We have two nodes:
+
+* 1st node (named -> ``Customer``): the node that publishes the number to be doubled (or for the extra task publishes two numbers to be multiplied) in ``/input`` topic. Moreover, it subscirbes to ``/result`` to get the result of the multiplication.
+
+* 2nd node (named -> ``Multiplier``): the node that subscribes to ``/input`` topic and do the multiplication process and returns the result by publishing it to ``/result`` topic.
+
+
+![Architechture](https://github.com/hany606/GSoD-OSRF-Task-2021/blob/main/assets/nodes_graph.png)
+
+Mainly, I have implmented the nodes in 2 ways that:
+
+First way:
+
+* The publisher node publishes a random number (two random numbers for the extra task) every 0.5 seconds using a timer.
+
+* The subscriber node listen to the topic and do the multiplication then publishes the result.
+
+Second way:
+
+* The publisher node publishes a random number (two random numbers for the extra task) and wait till it recieves a result on ``/result`` topic but if it did not recieve a result within a specific period (time-out effect), the publisher publishes with different random number as it happens if the publisher is runned but the subscriber is not runned.
+
+* The same behavior for the subscriber node as in the first way.
 
 
 ## Installation and preparing the environment:
@@ -24,15 +47,25 @@ After installation, you can check the following tutorials:
 
 Build the message interface package to avoid errors of dependencies from other packages:
 
-```colcon build --packages-select custom_msg_interface```
+```bash
+colcon build --packages-select custom_msg_interface
+```
 
-```. install/setup.bash``` or ``setup.zsh`` if you are using .zsh
+```bash
+. install/setup.bash
+```
+ or ``setup.zsh`` if you are using .zsh
 
 Build the other packages:
 
-```colcon build```
+```bash
+colcon build
+```
 
-```. install/setup.bash``` or ``setup.zsh`` if you are using .zsh
+```bash
+. install/setup.bash
+```
+ or ``setup.zsh`` if you are using .zsh
 
 ### Use ROS2 through Docker
 
@@ -47,49 +80,119 @@ After following the ``README.md`` inside the mentioned repository for docker, yo
 
 Full steps:
 
-* ```git clone https://github.com/PXLAIRobotics/ROS2FoxyDocker.git```
+```bash
+git clone https://github.com/PXLAIRobotics/ROS2FoxyDocker.git
+```
 
-* ```cd ROS2FoxyDocker```
+```bash
+cd ROS2FoxyDocker
+```
 
-* ```./01_build_image.sh```
+```bash
+./01_build_image.sh
+```
 
-* ```chmod +x 01_build_image.sh```
+```bash
+chmod +x 01_build_image.sh
+```
 
-* ```chmod +x 02_run_container_sh```
+```bash
+chmod +x 02_run_container_sh
+```
 
-* Remove lines 33 and 49 from ``02_run_container.sh``
+Then, remove lines 33 and 49 from ``02_run_container.sh``
 
-* ``` cd Projects/dev_ws_src/ && git clone https://github.com/hany606/GSoD-OSRF-Task-2021.git``` or clone it somewhere else and copy the packages directory inside ``ROS2FoxyDocker/Projects/dev_ws_src`` (This directory/volume is being accessed from inside the container)
+```bash 
+cd Projects/dev_ws_src/ && git clone https://github.com/hany606/GSoD-OSRF-Task-2021.git
+``` 
+or clone it somewhere else and copy the packages directory inside ``ROS2FoxyDocker/Projects/dev_ws_src`` (This directory/volume is being accessed from inside the container)
 
-* ```./02_run_container.sh```
+```bash
+./02_run_container.sh
+```
 
-* ```cd Projects/dev_ws```
+```bash
+cd Projects/dev_ws
+```
 
-* Then, start build the packages:
+Then, start building the packages:
 
 Build the message interface package to avoid errors of dependencies from other packages:
 
-```colcon build --packages-select custom_msg_interface```
+```bash
+colcon build --packages-select custom_msg_interface
+```
 
-```. install/setup.bash```
+```bash
+. install/setup.bash
+```
 
 Build the other packages:
 
-```colcon build```
+```bash
+colcon build
+```
 
-```. install/setup.bash```
+```bash
+. install/setup.bash
+```
 
-## Architechture
-We have two nodes:
-
-* 1st node "Customer": the node that publishes the number to be doubled (or for the extra task publishes two numbers to be multiplied) in ``/input`` topic. Moreover, it subscirbes to ``/result`` to get the result of the multiplication.
-
-* 2nd node ``Multiplier``: the node that subscribes to ``/input`` topic and do the multiplication process and returns the result by publishing it to ``/result`` topic.
-
-
-![Architechture](https://github.com/hany606/GSoD-OSRF-Task-2021/blob/master/assets/nodes_graph.png)
+## Packages:
 
 
+### gsod_test_py
+This package contains the implementation of the task using python, it contains the following nodes:
+
+* customer: publisher node for the 1st way as it is mentioned in the Architechture section.
+* multiplier: subscriber node.
+
+* customer_msg: publisher node for the 1st way as it is mentioned in the Architechture section but with the custom message and sends two numbers to be multiplied together.
+* multiplier_msg: subscriber node.
+
+* customerv2: publisher node for the 2nd way as it is mentioned in the Architechture section.
+
+* customerv2_msg: publisher node for the 2nd way as it is mentioned in the Architechture section but with the custom message and sends two numbers to be multiplied together.
+
+
+### gsod_test_cpp
+This package contains the implementation of the task using c++
+
+* customer: publisher node for the 1st way as it is mentioned in the Architechture section.
+* multiplier: subscriber node.
+
+* customer_msg: publisher node for the 1st way as it is mentioned in the Architechture section but with the custom message and sends two numbers to be multiplied together.
+* multiplier_msg: subscriber node.
+
+
+Note: I have implemented the 2nd way for the assignment only in python because I wanted just to show how the 2nd way behave and actually the code of the 1st way is not that different than 2nd way.
+
+## How to run?
+
+After building the packages and source the workspace, we need to open two terminals and run one for customer node and one for multiplier node.
+
+The following command to run the node in general:
+```bash
+ros2 run <package-name> <node-name>
+```
+
+For example, for python-based package:
+
+```bash
+ros2 run gsod_test_py customer
+```
+
+```bash
+ros2 run gsod_test_py multiplier
+```
+
+## References:
+I strongly recommend to read these tutorials for more information about ROS2:
+
+* [ROS2 documentation for creating a package](https://docs.ros.org/en/foxy/Tutorials/Creating-Your-First-ROS2-Package.html) 
+
+* ROS2 tutorial for creating a simple publisher and subscriber in [python](https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html) and [C++](https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html)
+
+* [ROS2 tutorial for creating a custom message](https://docs.ros.org/en/foxy/Tutorials/Custom-ROS2-Interfaces.html)
 
 ## TODO:
 
@@ -99,12 +202,6 @@ We have two nodes:
 
 [x] Write about creating the packages
 
-[0.8] Write steps to run all the stuff
+[x] Write steps to run all the stuff
 
-[ ] Write about concepts of custom messages, publishers and subscribers
-
-[ ] Write small documentation about creating packages
-
-[ ] Add references: https://docs.ros.org/en/foxy/Tutorials/Creating-Your-First-ROS2-Package.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
-
-[ ] Write about the build of the custom message interface before the build
+[x] Add references: https://docs.ros.org/en/foxy/Tutorials/Creating-Your-First-ROS2-Package.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
