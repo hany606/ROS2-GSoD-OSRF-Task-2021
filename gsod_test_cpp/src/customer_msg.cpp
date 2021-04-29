@@ -5,6 +5,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/int16.hpp"
+#include "custom_msg_interface/msg/request.hpp"
 
 using namespace std::chrono_literals;
 using std::placeholders::_1;
@@ -15,7 +16,7 @@ public:
   CustomerNode()
   : Node("customer_node"), count_(0)
   {
-    publisher_ = this->create_publisher<std_msgs::msg::Int16>("input", 10);
+    publisher_ = this->create_publisher<custom_msg_interface::msg::Request>("input", 10);
     timer_ = this->create_wall_timer(
       500ms, std::bind(&CustomerNode::timer_callback, this));
     subscription_ = this->create_subscription<std_msgs::msg::Int16>(
@@ -26,12 +27,13 @@ public:
 private:
   void timer_callback()
   {
-    auto message = std_msgs::msg::Int16();
+    auto message = custom_msg_interface::msg::Request();
     int min = 0;
-    int max = 1000;
+    int max = 100;
     // https://stackoverflow.com/questions/5008804/generating-random-integer-from-a-range
-    message.data = min + (rand() % static_cast<int>(max - min + 1));
-    RCLCPP_INFO(this->get_logger(), "Publishing: '%d'", message.data);
+    message.num1 = min + (rand() % static_cast<int>(max - min + 1));
+    message.num2 = min + (rand() % static_cast<int>(max - min + 1));
+    RCLCPP_INFO(this->get_logger(), "Publishing: '%d', '%d'", message.num1, message.num2);
     publisher_->publish(message);
   }
 
@@ -41,7 +43,7 @@ private:
   }
 
   rclcpp::TimerBase::SharedPtr timer_;
-  rclcpp::Publisher<std_msgs::msg::Int16>::SharedPtr publisher_;
+  rclcpp::Publisher<custom_msg_interface::msg::Request>::SharedPtr publisher_;
   size_t count_;
   rclcpp::Subscription<std_msgs::msg::Int16>::SharedPtr subscription_;
 };

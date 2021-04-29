@@ -16,3 +16,5 @@ This repository is for GSoD assignment 2021
 [ ] Write small documentation about creating packages
 
 [ ] Add references: https://docs.ros.org/en/foxy/Tutorials/Creating-Your-First-ROS2-Package.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html , https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
+
+[ ] Write about the build of the custom message interface before the build

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(gsod_test_cpp)
+project(custom_msg_interface)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -17,41 +17,14 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(custom_msg_interface REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 
-
-
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Request.msg"
+)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
-
-add_executable(customer src/customer.cpp)
-ament_target_dependencies(customer rclcpp std_msgs )
-
-add_executable(customer_msg src/customer_msg.cpp)
-ament_target_dependencies(customer_msg rclcpp std_msgs custom_msg_interface)
-
-add_executable(multiplier src/multiplier.cpp)
-ament_target_dependencies(multiplier rclcpp std_msgs)
-
-add_executable(multiplier_msg src/multiplier_msg.cpp)
-ament_target_dependencies(multiplier_msg rclcpp std_msgs custom_msg_interface)
-
-
-add_executable(print_test src/print_test.cpp)
-target_include_directories(print_test PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-
-install(TARGETS 
-  print_test
-  customer
-  multiplier
-  customer_msg
-  multiplier_msg
-  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

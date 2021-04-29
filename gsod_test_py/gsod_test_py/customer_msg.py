@@ -3,7 +3,7 @@ from rclpy.node import Node
 from random import randint
 
 from std_msgs.msg import Int16
-from gsod_test_cpp.msg import Request
+from custom_msg_interface.msg import Request
 
 class CustomerNode(Node):
 
